@@ -1,0 +1,64 @@
+# target_path: path to the codebase you want to analyze
+target_path: ./src
+
+# output directory for all generated artifacts
+output_dir: ./awa_output
+
+# LLM provider: mimo | claude | openai
+llm_provider: mimo
+
+# API key — use env var to avoid committing secrets
+llm_api_key: ${MIMO_API_KEY}
+
+# Optional: override the default API base URL
+# llm_base_url: https://api.mimo.ai/v1
+
+# Pipeline version tag (appears in CHANGELOG)
+version: "Unreleased"
+
+# Set to true to only run Phase 1 (scan), skip refactor/test/doc
+dry_run: false
+
+# ── Phase 1: Scan ─────────────────────────────────────────────
+scan:
+  include_patterns:
+    - "*.py"
+    - "*.ts"
+    - "*.js"
+  exclude_dirs:
+    - ".git"
+    - "node_modules"
+    - "__pycache__"
+    - ".venv"
+    - "dist"
+    - "build"
+  max_file_size_kb: 500
+  enable_security_scan: true
+  enable_perf_scan: true
+  enable_debt_scan: true
+
+# ── Phase 2: Refactor ─────────────────────────────────────────
+refactor:
+  max_proposals_per_run: 10
+  auto_create_pr: false
+  # Only generate proposals with effort <= this threshold
+  # S = small (<2h), M = medium (<1d), L = large (<3d), XL = extra-large
+  effort_threshold: M
+
+# ── Phase 3: Tests ────────────────────────────────────────────
+test:
+  output_dir: ./awa_output/tests/generated
+  framework: pytest
+  coverage_target: 0.80
+  generate_integration_tests: true
+  max_test_cases_per_function: 8
+  use_hypothesis: false
+
+# ── Phase 4: Documentation ────────────────────────────────────
+doc:
+  docs_root: ./awa_output/docs
+  api_docs_dir: ./awa_output/docs/api
+  changelog_file: ./CHANGELOG.md
+  auto_update_changelog: true
+  auto_update_api_docs: true
+  style: google   # google | numpy | sphinx
