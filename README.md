@@ -54,7 +54,7 @@ Your Codebase
                          │ TestSuite[]
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
-│  Phase 4 — DocAgent                             [LLM]       │
+│  Phase 4 — DocAgent               ✨ MiMo / Claude         │
 │  • Generates/updates API reference pages                    │
 │  • Prepends changelog entries (Keep a Changelog format)     │
 │  • Can update inline docstrings                             │
@@ -148,9 +148,9 @@ awa_output/
 MiMo's long-context capability (128k tokens) is central to this tool's design:
 
 - **Phase 1**: Scans entire modules in a single pass without chunking
-- **Phase 2**: Context-aware refactoring across multiple files
+- **Phase 2**: Context-aware refactoring across multiple files — understands the full context of a change before suggesting it
 - **Phase 3**: Test generation with complete function context
-- **Phase 4**: Documentation generation from comprehensive code context
+- **Phase 4**: Reads existing documentation + code diffs together to produce coherent updates
 
 ---
 
@@ -340,7 +340,7 @@ For 800M-1500M monthly tokens:
 - [x] Phase 4: Documentation sync
 - [ ] GitHub integration (auto-create PRs)
 - [ ] Git history analysis (derive context from commits)
-- [ ] Configuration via YAML/TOML
+- [x] Configuration via YAML/TOML
 - [ ] Multi-language support (Go, Rust, Java, TypeScript)
 - [ ] Custom rule plugins
 - [ ] Web dashboard
@@ -369,24 +369,9 @@ MIT License — see [LICENSE](LICENSE)
 
 - **Issues**: Open on GitHub
 - **Discussions**: GitHub Discussions
-- **Email**: support@aiworkflowautomator.dev
+- **Email**: carol.xinyu.wu@gmail.com
 
 ---
-
-**Built with ❤️ for independent developers and small teams.**
-- **Phase 2**: Understands the full context of a refactoring before suggesting changes
-- **Phase 4**: Reads existing documentation + code diffs together to produce coherent updates
-
-We tested MiMo against Claude on our internal benchmark (50-developer beta cohort) and found:
-- **~40% faster** on large file analysis (>500 LOC)
-- **Comparable quality** on refactoring suggestions for Python codebases
-- **Better consistency** on documentation generation tasks
-
----
-
-## Beta Status
-
-Currently in closed beta with ~50 developers. If you'd like early access, open an issue with the `beta-request` label.
 
 **Known limitations:**
 - TypeScript/JavaScript scanning is regex-based (AST analysis coming in v0.4)
@@ -395,10 +380,4 @@ Currently in closed beta with ~50 developers. If you'd like early access, open a
 
 ---
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md). PRs welcome.
-
-## License
-
-MIT — see [LICENSE](LICENSE).
+**Built with ❤️ for independent developers and small teams.**
